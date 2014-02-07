@@ -1,11 +1,6 @@
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.util.Animator;
 
-import javax.swing.JFrame;
-import javax.media.opengl.awt.GLCanvas;
-
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -25,10 +20,13 @@ import javax.media.opengl.GLProfile;
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureIO;
 
+import com.jogamp.newt.opengl.GLWindow;
+import com.jogamp.newt.event.WindowAdapter;
+import com.jogamp.newt.event.WindowEvent;
+
 public class justTexture implements GLEventListener
 {
-    private JFrame frame;
-    private GLCanvas canvas;
+    private GLWindow window;
     private static GL3 gl;
 
     private Texture texture;
@@ -86,16 +84,15 @@ public class justTexture implements GLEventListener
 
     public justTexture()
     {		
-        frame = new JFrame("Just Texture");
         GLCapabilities capabilities = new GLCapabilities(GLProfile.get(GLProfile.GL3));
-        canvas = new GLCanvas(capabilities);
-        canvas.addGLEventListener(this);
-        frame.add(canvas);
-        final Animator animator = new Animator(canvas);
-        frame.addWindowListener(new WindowAdapter()
+        window = GLWindow.create(capabilities);
+        window.setTitle("Just Texture");
+        final Animator animator = new Animator(window);
+        window.addGLEventListener(this);
+        window.addWindowListener(new WindowAdapter()
         {
                 @Override
-                public void windowClosing(WindowEvent e) {
+                public void windowDestroyed(WindowEvent e) {
                         new Thread(new Runnable() {
                                 public void run() {
                                         animator.stop();
@@ -104,9 +101,8 @@ public class justTexture implements GLEventListener
                         }).start();
                 }
         });
-        frame.setSize(800, 800);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        window.setSize(800, 800);
+        window.setVisible(true);
         animator.start();	
     }
 
