@@ -1,4 +1,4 @@
-package com.gudinna;
+package xranby.com.gudinna;
 
 import com.jogamp.graph.curve.Region;
 import com.jogamp.graph.font.Font;

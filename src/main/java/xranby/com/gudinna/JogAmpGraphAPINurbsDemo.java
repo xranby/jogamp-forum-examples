@@ -1,4 +1,4 @@
-package com.gudinna;
+package xranby.com.gudinna;
 
 import com.jogamp.graph.curve.OutlineShape;
 import com.jogamp.graph.curve.Region;
@@ -26,31 +26,31 @@ import com.jogamp.opengl.util.PMVMatrix;
  * \  /   "' _________________________________________________________________________ `"   \  /
  *  \/____.                                                                             .____\/
  * </pre>
- *
+ * <p>
  * <p>
  * JogAmp JOGL OpenGL ES 2 graph nurbs demo to expose and learn how to use the graph API to draw nurbs.
- *
+ * <p>
  * Inside the main JOGL source tree we have the "graph" API that is what we consider the *best* way to render nurbs on all GPU's using a patent free shaders implementation.
  * Graph is suitable for both desktop and mobile GPU processors.
- *
+ * <p>
  * In a nutshell the JogAmp Graph API enable you to define nurbs shapes
  * Outline → OutlineShapes → GLRegion
  * and then render the shapes using a Renderer
  * RegionRenderer
  * TextRenderer (same as RegionRender with Helper methods for texts and fonts.)
- *
+ * <p>
  * outline.addVertex(x, y, z, w, onCurve);
  * outlineShape.addOutline(outline);
  * region = GLRegion.create(outlineShape, getRenderModes());
  * region.render(gl, outlineShape,...);
- *
+ * <p>
  * The graph API is using the math by Rami Santina introduced in 2011
  * https://jogamp.org/doc/gpunurbs2011/p70-santina.pdf
  * https://jogamp.org/doc/gpunurbs2011/graphicon2011-slides.pdf
- *
+ * <p>
  * The best documentation for the graph API is found in the JOGL junit tests
  * http://jogamp.org/git/?p=jogl.git;a=tree;f=src/test/com/jogamp/opengl/test/junit/graph;hb=HEAD
- *
+ * <p>
  * and javadoc for Outline and OutlineShape .. and all classes i mentioned above..
  * https://www.jogamp.org/deployment/jogamp-next/javadoc/jogl/javadoc/com/jogamp/graph/geom/Outline.html
  * https://www.jogamp.org/deployment/jogamp-next/javadoc/jogl/javadoc/com/jogamp/graph/curve/OutlineShape.html
@@ -66,13 +66,13 @@ public class JogAmpGraphAPINurbsDemo {
     public static void main(String[] args) {
 
         // Enable JOGL debugging of GLSL shader compilation and GL calls
-        System.setProperty( "jogl.debug.GLSLCode", "");
-        System.setProperty( "jogl.debug.DebugGL", "");
+        System.setProperty("jogl.debug.GLSLCode", "");
+        System.setProperty("jogl.debug.DebugGL", "");
 
         GLCapabilities caps = new GLCapabilities(GLProfile.get(GLProfile.GL2ES2));
         caps.setAlphaBits(4);
-	    GLWindow glWindow = GLWindow.create(caps);
-        glWindow.setSize(800,400);
+        GLWindow glWindow = GLWindow.create(caps);
+        glWindow.setSize(800, 400);
         glWindow.setTitle("JogAmp JOGL Graph API nurbs demo");
         glWindow.setVisible(true);
 
@@ -83,7 +83,7 @@ public class JogAmpGraphAPINurbsDemo {
         animator.start();
     }
 
-    private static class GraphNurbs implements GLEventListener{
+    private static class GraphNurbs implements GLEventListener {
 
         // these will define a shape that is defined once at init
         OutlineShape outlineShape;
@@ -103,11 +103,11 @@ public class JogAmpGraphAPINurbsDemo {
 
         /* 2nd pass texture size antialias SampleCount
            4 is usually enough */
-        private final int[] sampleCount = new int[] { 4 };
+        private final int[] sampleCount = new int[]{4};
 
         /* variables used to update the PMVMatrix before rendering */
         private float xTranslate = -40f;
-        private float yTranslate =  0f;
+        private float yTranslate = 0f;
         private float zTranslate = -100f;
         private float angleRotate = 0f;
 
@@ -136,25 +136,25 @@ public class JogAmpGraphAPINurbsDemo {
 
             // Here i add some points off curve causing nurbs bends
             outlineShape.addEmptyOutline();
-            outlineShape.addVertex(0.0f,-10.0f, true);
-            outlineShape.addVertex(17.0f,-10.0f, true);
-            outlineShape.addVertex(11.0f,5.0f, /* onCurve */false);
-            outlineShape.addVertex(17.0f,10.0f, true);
-            outlineShape.addVertex(7.0f,15.0f, /* onCurve */ false);
-            outlineShape.addVertex(6.0f,8.0f, /* onCurve */false);
-            outlineShape.addVertex(0.0f,10.0f,true);
+            outlineShape.addVertex(0.0f, -10.0f, true);
+            outlineShape.addVertex(17.0f, -10.0f, true);
+            outlineShape.addVertex(11.0f, 5.0f, /* onCurve */false);
+            outlineShape.addVertex(17.0f, 10.0f, true);
+            outlineShape.addVertex(7.0f, 15.0f, /* onCurve */ false);
+            outlineShape.addVertex(6.0f, 8.0f, /* onCurve */false);
+            outlineShape.addVertex(0.0f, 10.0f, true);
             outlineShape.closeLastOutline(true);
 
             // Here i add all points on curve == straight lines
             float offset = 30;
             outlineShape.addEmptyOutline();
-            outlineShape.addVertex(offset+0.0f,-10.0f, true);
-            outlineShape.addVertex(offset+17.0f,-10.0f, true);
-            outlineShape.addVertex(offset+11.0f,5.0f, true);
-            outlineShape.addVertex(offset+16.0f,10.0f, true);
-            outlineShape.addVertex(offset+7.0f,15.0f, true);
-            outlineShape.addVertex(offset+6.0f,8.0f, true);
-            outlineShape.addVertex(offset+0.0f,10.0f, true);
+            outlineShape.addVertex(offset + 0.0f, -10.0f, true);
+            outlineShape.addVertex(offset + 17.0f, -10.0f, true);
+            outlineShape.addVertex(offset + 11.0f, 5.0f, true);
+            outlineShape.addVertex(offset + 16.0f, 10.0f, true);
+            outlineShape.addVertex(offset + 7.0f, 15.0f, true);
+            outlineShape.addVertex(offset + 6.0f, 8.0f, true);
+            outlineShape.addVertex(offset + 0.0f, 10.0f, true);
             outlineShape.closeLastOutline(true);
 
             regionRenderer = RegionRenderer.create(renderState, /* GLCallback */ RegionRenderer.defaultBlendEnable, /* GLCallback */ RegionRenderer.defaultBlendDisable);
@@ -196,8 +196,8 @@ public class JogAmpGraphAPINurbsDemo {
 
             // use JogAmp high resolution timer for smooth animations!
             double time = com.jogamp.common.os.Platform.currentTimeMicros();
-            float sinusAnimation = (float) (Math.sin(time/100000f));
-            float sinusAnimationRotate = (float) (Math.sin(time/1000000f));
+            float sinusAnimation = (float) (Math.sin(time / 100000f));
+            float sinusAnimationRotate = (float) (Math.sin(time / 1000000f));
 
             // clear screen
             gl.glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
@@ -208,9 +208,9 @@ public class JogAmpGraphAPINurbsDemo {
             pmv.glMatrixMode(GLMatrixFunc.GL_MODELVIEW);
             pmv.glLoadIdentity();
             pmv.glTranslatef(xTranslate, yTranslate, zTranslate);
-            pmv.glRotatef(angleRotate+ 10f * sinusAnimationRotate, 0, 0, 1);
+            pmv.glRotatef(angleRotate + 10f * sinusAnimationRotate, 0, 0, 1);
 
-            if( weight != regionRenderer.getRenderState().getWeight() ) {
+            if (weight != regionRenderer.getRenderState().getWeight()) {
                 regionRenderer.getRenderState().setWeight(weight);
             }
 
@@ -225,13 +225,13 @@ public class JogAmpGraphAPINurbsDemo {
             // We will now update the dynamic shape that changes on each frame
             // I will animate the off curve points
             dynamicOutlineShape.clear();
-            dynamicOutlineShape.addVertex(offset + 0.0f,-10.0f, true);
-            dynamicOutlineShape.addVertex(offset + 17.0f,-10.0f, true);
-            dynamicOutlineShape.addVertex(offset + 11.0f +5 * sinusAnimation,5.0f + 5 * sinusAnimation, /* onCurve */false);
-            dynamicOutlineShape.addVertex(offset + 17.0f,10.0f, true);
-            dynamicOutlineShape.addVertex(offset + 7.0f + 5 * sinusAnimation,15.0f + 5 * sinusAnimation, /* onCurve */ false);
-            dynamicOutlineShape.addVertex(offset + 6.0f ,8.0f , true);
-            dynamicOutlineShape.addVertex(offset + 0.0f,10.0f, true);
+            dynamicOutlineShape.addVertex(offset + 0.0f, -10.0f, true);
+            dynamicOutlineShape.addVertex(offset + 17.0f, -10.0f, true);
+            dynamicOutlineShape.addVertex(offset + 11.0f + 5 * sinusAnimation, 5.0f + 5 * sinusAnimation, /* onCurve */false);
+            dynamicOutlineShape.addVertex(offset + 17.0f, 10.0f, true);
+            dynamicOutlineShape.addVertex(offset + 7.0f + 5 * sinusAnimation, 15.0f + 5 * sinusAnimation, /* onCurve */ false);
+            dynamicOutlineShape.addVertex(offset + 6.0f, 8.0f, true);
+            dynamicOutlineShape.addVertex(offset + 0.0f, 10.0f, true);
             dynamicOutlineShape.closeLastOutline(true);
 
             // the RegionRenderer PMVMatrix define where we want to render our shape
@@ -239,9 +239,9 @@ public class JogAmpGraphAPINurbsDemo {
             dynamicPmv.glMatrixMode(GLMatrixFunc.GL_MODELVIEW);
             dynamicPmv.glLoadIdentity();
             dynamicPmv.glTranslatef(xTranslate, yTranslate, zTranslate);
-            dynamicPmv.glRotatef(angleRotate+ 10f * sinusAnimationRotate, 0, 0, 1);
+            dynamicPmv.glRotatef(angleRotate + 10f * sinusAnimationRotate, 0, 0, 1);
 
-            if( weight != dynamicRegionRenderer.getRenderState().getWeight() ) {
+            if (weight != dynamicRegionRenderer.getRenderState().getWeight()) {
                 dynamicRegionRenderer.getRenderState().setWeight(weight);
             }
 
@@ -250,7 +250,7 @@ public class JogAmpGraphAPINurbsDemo {
             // here we upload the new dynamically created data to the GPU
             dynamicGlRegion.addOutlineShape(dynamicOutlineShape, null, glRegion.hasColorChannel() ? renderState.getColorStatic(new float[4]) : null);
 
-             // Draw the dynamic shape using RegionRenderer and GLRegion
+            // Draw the dynamic shape using RegionRenderer and GLRegion
             dynamicRegionRenderer.enable(gl, true);
             dynamicGlRegion.draw(gl, dynamicRegionRenderer, sampleCount);
             dynamicRegionRenderer.enable(gl, false);
