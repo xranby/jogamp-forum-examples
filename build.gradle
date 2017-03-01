@@ -1,0 +1,20 @@
+apply plugin: 'java'
+
+buildscript {
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+dependencies {
+
+    def jogl = '2.3.2'
+
+    compile "org.jogamp.gluegen:gluegen-rt:$jogl"
+    compile "org.jogamp.jogl:jogl-all:$jogl"
+}
+
+repositories {
+    mavenCentral()
+}
