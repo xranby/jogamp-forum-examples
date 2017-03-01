@@ -199,6 +199,7 @@ public class JogAmpGraphAPITextDemo {
             }
 
             float sinusAnimationRotate = (float) (Math.sin(time/1000000f));
+            float sinusAnimationJump = (float) (Math.sin(time/100000f));
 
             String text = "JogAmp GRAPH API Text demo\nFPS: "+fps+"\nFPS human readable: "+fpsHuman;
 
@@ -220,7 +221,7 @@ public class JogAmpGraphAPITextDemo {
             final PMVMatrix Pmv = regionRenderer.getMatrix();
             Pmv.glMatrixMode(GLMatrixFunc.GL_MODELVIEW);
             Pmv.glLoadIdentity();
-            Pmv.glTranslatef(xTranslate+offsetX, yTranslate+offsetY, zTranslate);
+            Pmv.glTranslatef(xTranslate+offsetX, yTranslate+offsetY, zTranslate+(sinusAnimationJump*10f));
             Pmv.glRotatef(angleRotate+ 10f * sinusAnimationRotate, 0, 0, 1);
 
             if( weight != regionRenderer.getRenderState().getWeight() ) {
