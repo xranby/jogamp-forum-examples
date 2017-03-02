@@ -1,5 +1,5 @@
 apply plugin:'application'
-mainClassName = "xranby.com.gudinna.JogAmpGraphAPITextDemo"
+mainClassName = project.hasProperty("mainClass") ? project.getProperty("mainClass") : "xranby.com.gudinna.JogAmpGraphAPITextDemo"
 
 apply plugin: 'java'
 
