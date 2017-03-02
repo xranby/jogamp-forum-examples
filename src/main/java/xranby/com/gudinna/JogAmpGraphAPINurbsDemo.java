@@ -7,6 +7,8 @@ import com.jogamp.graph.curve.opengl.RegionRenderer;
 import com.jogamp.graph.curve.opengl.RenderState;
 import com.jogamp.graph.geom.SVertex;
 
+import com.jogamp.newt.event.WindowAdapter;
+import com.jogamp.newt.event.WindowEvent;
 import com.jogamp.newt.opengl.GLWindow;
 
 import com.jogamp.opengl.*;
@@ -81,6 +83,19 @@ public class JogAmpGraphAPINurbsDemo {
         animator = new Animator();
         animator.add(glWindow);
         animator.start();
+
+        glWindow.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowDestroyed(WindowEvent e) {
+                new Thread(new Runnable() {
+                    public void run() {
+                        //stop the animator thread when user close the window
+                        animator.stop();
+                        System.exit(0);
+                    }
+                }).start();
+            }
+        });
     }
 
     private static class GraphNurbs implements GLEventListener {
@@ -181,8 +196,6 @@ public class JogAmpGraphAPINurbsDemo {
         @Override
         public void dispose(GLAutoDrawable drawable) {
             final GL2ES2 gl = drawable.getGL().getGL2ES2();
-            //stop the animator thread when user close the window
-            animator.stop();
             // it is important to free memory allocated no the GPU!
             // this memory cant be garbage collected by the JVM
             regionRenderer.destroy(gl);
