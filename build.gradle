@@ -3,22 +3,24 @@ mainClassName = project.hasProperty("mainClass") ? project.getProperty("mainClas
 
 apply plugin: 'java'
 
-buildscript {
-
-    repositories {
-        mavenCentral()
+repositories {
+    // Antlr is fetched from mavenCentral
+    mavenCentral()
+    // JogAmp jogl publish its maven releases on the jogmap.org server
+    maven {
+        url "https://jogamp.org/deployment/maven"
     }
 }
 
 dependencies {
 
-    def jogl = '2.3.2'
+    def JogAmpVersion = '2.4.0'
 
-    compile "org.jogamp.gluegen:gluegen-rt-main:$jogl"
-    compile "org.jogamp.jogl:jogl-all-main:$jogl"
-    compile "org.jogamp.jogl:jogl:$jogl:fonts-p0@jar"
-}
-
-repositories {
-    mavenCentral()
+    // The JogAmp -main maven repositorys contains the runtime natives
+    implementation "org.jogamp.jogl:nativewindow-main:$JogAmpVersion"
+    implementation "org.jogamp.gluegen:gluegen-rt-main:$JogAmpVersion"
+    implementation "org.jogamp.jogl:jogl-all-main:$JogAmpVersion"
+    implementation "org.jogamp.joal:joal-main:$JogAmpVersion"
+    // This demo require True Type fonts that are located in the fonts-p0.jar
+    implementation "org.jogamp.jogl:jogl:$JogAmpVersion:fonts-p0@jar"
 }
